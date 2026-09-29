@@ -1,6 +1,56 @@
-import {createContext,useContext,useMemo,useState,ReactNode} from 'react';
-import {authApi,AuthResponse,User} from './authApi';
-type AuthContextValue={user:User|null;token:string|null;login:(email:string,password:string)=>Promise<void>;signup:(email:string,password:string,displayName:string)=>Promise<void>;logout:()=>void};
-const Ctx=createContext<AuthContextValue|null>(null);
-export function AuthProvider({children}:{children:ReactNode}){const [token,setToken]=useState<string|null>(()=>localStorage.getItem('access_token'));const [user,setUser]=useState<User|null>(()=>{try{return JSON.parse(localStorage.getItem('auth_user')||'null')}catch{return null}});const apply=(r:AuthResponse)=>{localStorage.setItem('access_token',r.accessToken);localStorage.setItem('auth_user',JSON.stringify(r.user));setToken(r.accessToken);setUser(r.user)};const logout=()=>{localStorage.removeItem('access_token');localStorage.removeItem('auth_user');setToken(null);setUser(null)};const value=useMemo(()=>({user,token,login:async(e:string,p:string)=>apply(await authApi.login({email:e,password:p})),signup:async(e:string,p:string,d:string)=>apply(await authApi.signup({email:e,password:p,displayName:d})),logout}),[user,token]);return <Ctx.Provider value={value}>{children}</Ctx.Provider>}
-export const useAuth=()=>{const v=useContext(Ctx);if(!v)throw new Error('useAuth must be inside AuthProvider');return v};
+import { createContext, useContext, useMemo, useState, ReactNode } from "react";
+import { authApi, AuthResponse, User } from "./authApi";
+type AuthContextValue = {
+  user: User | null;
+  token: string | null;
+  login: (email: string, password: string) => Promise<void>;
+  signup: (
+    email: string,
+    password: string,
+    displayName: string,
+  ) => Promise<void>;
+  logout: () => void;
+};
+const Ctx = createContext<AuthContextValue | null>(null);
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [token, setToken] = useState<string | null>(() =>
+    localStorage.getItem("access_token"),
+  );
+  const [user, setUser] = useState<User | null>(() => {
+    try {
+      return JSON.parse(localStorage.getItem("auth_user") || "null");
+    } catch {
+      return null;
+    }
+  });
+  const apply = (r: AuthResponse) => {
+    localStorage.setItem("access_token", r.accessToken);
+    localStorage.setItem("auth_user", JSON.stringify(r.user));
+    setToken(r.accessToken);
+    setUser(r.user);
+  };
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("auth_user");
+    setToken(null);
+    setUser(null);
+  };
+  const value = useMemo(
+    () => ({
+      user,
+      token,
+      login: async (e: string, p: string) =>
+        apply(await authApi.login({ email: e, password: p })),
+      signup: async (e: string, p: string, d: string) =>
+        apply(await authApi.signup({ email: e, password: p, displayName: d })),
+      logout,
+    }),
+    [user, token],
+  );
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+}
+export const useAuth = () => {
+  const v = useContext(Ctx);
+  if (!v) throw new Error("useAuth must be inside AuthProvider");
+  return v;
+};
