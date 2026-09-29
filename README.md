@@ -44,6 +44,50 @@ cd frontend && npm run build
 ## Distributed architecture
 See `docs/architecture.md` for the Mermaid diagram showing Products, Orders, Payments, Notification Service, API Gateway, identity provider and event bus. A production event implementation should use transactional outbox + idempotent consumers.
 
+## UI screenshots
+
+The following screenshots are stored under [`docs/images`](docs/images) and document the main storefront, authentication, customer, and administration flows.
+
+### Home
+
+![Suprematy home page](docs/images/home.png)
+
+### Product catalog
+
+![Products page](docs/images/products.png)
+
+### Shopping cart
+
+![Shopping cart](docs/images/cart.png)
+
+### Favorites
+
+![Favorites page](docs/images/favorites.png)
+
+### Wishlist
+
+![Wishlist page](docs/images/wishlist.png)
+
+### Orders
+
+![Orders page](docs/images/orders.png)
+
+### Administration / CRM
+
+![Admin CRM dashboard](docs/images/admin.png)
+
+### Login
+
+![Login page](docs/images/login.png)
+
+### Sign up
+
+![Sign up page](docs/images/signup.png)
+
+### Forgot password
+
+![Forgot password page](docs/images/forgotpassword.png)
+
 ## Production hardening next steps
 Use EF migrations rather than `EnsureCreated`, external OIDC (Entra/Auth0/Keycloak), OpenTelemetry, rate limiting, secret management, broker-backed integration events/outbox, CI quality/security gates, container orchestration and production-grade PostgreSQL/SQL Server while retaining SQLite for the coding exercise.
 
