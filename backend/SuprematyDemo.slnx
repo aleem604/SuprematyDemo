@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SuprematyDemo.Domain/SuprematyDemo.Domain.csproj" />
+    <Project Path="src/SuprematyDemo.Application/SuprematyDemo.Application.csproj" />
+    <Project Path="src/SuprematyDemo.Infrastructure/SuprematyDemo.Infrastructure.csproj" />
+    <Project Path="src/SuprematyDemo.Api/SuprematyDemo.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SuprematyDemo.UnitTests/SuprematyDemo.UnitTests.csproj" />
+    <Project Path="tests/SuprematyDemo.IntegrationTests/SuprematyDemo.IntegrationTests.csproj" />
+  </Folder>
+</Solution>

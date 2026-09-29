@@ -1,0 +1,3 @@
+import {useMutation,useQuery,useQueryClient} from '@tanstack/react-query'; import {createProduct,getProducts} from './productApi';
+export const useProducts=(colour:string="")=>useQuery({queryKey:['products',colour],queryFn:()=>getProducts(colour),staleTime:30_000});
+export const useCreateProduct=()=>{const qc=useQueryClient();return useMutation({mutationFn:createProduct,onSuccess:()=>qc.invalidateQueries({queryKey:['products']})});};
